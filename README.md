@@ -1,4 +1,4 @@
-### 贵阳前端新框架（gyNewAPP）  
+### myNodeApi  
 >author:  Dreacatcher  
 >weibo:  顽强的小蜜蜂  
 
