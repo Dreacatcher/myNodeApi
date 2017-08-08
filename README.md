@@ -23,6 +23,10 @@
 ### Build Setup  
 
 ``` bash
+
+# install koa-generator
+npm install -g koa-generator
+
 # install dependencies
 npm install  
 
