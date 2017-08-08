@@ -1,6 +1,6 @@
 ### 贵阳前端新框架（gyNewAPP）  
->author:  Dreacatcher
->weibo:  顽强的小蜜蜂
+>author:  Dreacatcher  
+>weibo:  顽强的小蜜蜂  
 
 ### 前言
 本项目是基于node+mongodb+koa+Redis的服务端api(正在开发中......)
