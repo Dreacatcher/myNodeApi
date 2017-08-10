@@ -17,7 +17,7 @@ app.use(views('views', {
 }));
 app.use(require('koa-bodyparser')());
 app.use(json());
-app.use(logger());
+app.use(logger()); // console logger
 
 app.use(function *(next){
   var start = new Date;
