@@ -1,5 +1,9 @@
 var mongodb = require("../database/db");
 var markdown=require('markdown').markdown;
+
+class Post{
+	
+}
 function Post(name,title,post) {
 	this.name=name;
 	this.title=title;
