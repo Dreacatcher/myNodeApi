@@ -1,33 +1,32 @@
-
-/**
- *users0001 :用户列表接口
- *users0002 :个人用户查询接口
- */
+let usersModel = require('../module/usersModel');
 let userInfo = {
+  /**
+   * getUserInfo
+   * 用户列表接口
+   * @param {any} _param
+   * @returns
+   */
   getUserInfo(_param) {
-    let _userInfo ={}
-    if(_param.title == 'aaaa'){
-      _userInfo = {
-        code: 200,
-        body: {
-          req: '11111',
-          title: '用户接口',
-          cont: '用户接口--获取用户信心详情接口'
-        },
-        status: 'success'
-      }
-    }else{
-      _userInfo = {
-        code: 200,
-        body: {
-          req: 'bbbb',
-          title: '用户接口',
-          cont: '用户接口--获取用户信心详情接口'
-        },
-        status: 'success'
-      }
+    let _userInfo = {}
+    let newUser = new usersModel({
+      name: _param.name,
+      password: _param.password,
+      email: _param.email,
+    });
+
+    newUser.save((err, user) => {
+      console.log(err)
+      return _userInfo
+    })
+    _userInfo = {
+      code: 200,
+      body: {
+        req: _param.title,
+        title: '用户接口',
+        cont: '用户接口--获取用户信心详情接口'
+      },
+      status: 'success'
     }
-    
     return _userInfo
   }
 }

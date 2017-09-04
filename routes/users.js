@@ -3,12 +3,13 @@ const users = require('../server/api/users');
 router.prefix('/api/users');
 
 /**
- * users0001 获取用户详情信息
+ *users0001 :用户列表接口
+ *users0002 :个人用户查询接口
  */
 router.get('/users0001', function* (req, res, next) {
-	console.log('post请求参数对象 :',req.query);
-	yield this.body = users.getUserInfo(req.query);
+	yield this.body = users.getUserInfo(this.request.body);
 });
+
 router.post('/users0001', function* (ctx, next) {
 	yield this.body = users.getUserInfo(this.request.body);
 });

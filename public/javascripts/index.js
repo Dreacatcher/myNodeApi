@@ -1,7 +1,8 @@
 $(function(){
   var data={
-    title:'aaaa',
-    post:'bbbbb'
+    name:'lucm_test',
+    password:'psw123',
+    email:'13566@qq.com',
   }
   $.ajax({
     type: 'POST',
