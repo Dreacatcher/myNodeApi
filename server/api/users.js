@@ -5,16 +5,30 @@
  */
 let userInfo = {
   getUserInfo(_param) {
-    console.log(_param)
-    let userInfo = {
-      code: 200,
-      body: {
-        title: '接口测试',
-        cont: '发表接口'
-      },
-      status:'success'
+    let _userInfo ={}
+    if(_param.title == 'aaaa'){
+      _userInfo = {
+        code: 200,
+        body: {
+          req: '11111',
+          title: '用户接口',
+          cont: '用户接口--获取用户信心详情接口'
+        },
+        status: 'success'
+      }
+    }else{
+      _userInfo = {
+        code: 200,
+        body: {
+          req: 'bbbb',
+          title: '用户接口',
+          cont: '用户接口--获取用户信心详情接口'
+        },
+        status: 'success'
+      }
     }
-    return userInfo
+    
+    return _userInfo
   }
 }
 

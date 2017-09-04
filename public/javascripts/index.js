@@ -5,7 +5,7 @@ $(function(){
   }
   $.ajax({
     type: 'POST',
-    url: 'http://localhost:3000/api/users/published',
+    url: 'http://localhost:3000/api/users/users0001',
     data: data,
     success: function(){
       console.log("dddd")

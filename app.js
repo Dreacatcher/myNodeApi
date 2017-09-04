@@ -27,11 +27,7 @@ app.use(function *(next){
 });
 
 app.use(require('koa-static')(__dirname + '/public'));
-// app.use(index.routes(), index.allowedMethods());
-// app.use(users.routes(), users.allowedMethods());
-
 // routes definition
-require('./routes/index')(app)
-require('./routes/users')(app)
-
+app.use(index.routes(), index.allowedMethods());
+app.use(users.routes(), users.allowedMethods());
 module.exports = app;

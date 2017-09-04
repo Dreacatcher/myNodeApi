@@ -1,11 +1,18 @@
+const router = require('koa-router')();
+const users = require('../server/api/users');
+router.prefix('/api/users');
 
-const Router = require('koa-router')()
-const users = require('../server/api/users')
-Router.prefix('/api/users');
-module.exports = function(app) {
-  Router.use('/users0001',users.getUserInfo(),users.allowedMethods())
-	Router.get('/*', (ctx,next)=> {
-		ctx.body = {status:'success',data:'台湾是中国不可分割的一部分.'}
-	})
-	app.use(Router.routes())
-}
+/**
+ * users0001 获取用户详情信息
+ */
+router.get('/users0001', function* (req, res, next) {
+	console.log('post请求参数对象 :',req.query);
+	yield this.body = users.getUserInfo(req.query);
+});
+router.post('/users0001', function* (ctx, next) {
+	yield this.body = users.getUserInfo(this.request.body);
+});
+
+
+module.exports = router;
+
