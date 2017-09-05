@@ -1,6 +1,6 @@
 $(function(){
   var data={
-    name:'lucm_test',
+    name:'lucm_test1',
     password:'psw123',
     email:'13566@qq.com',
   }
