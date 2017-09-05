@@ -6,7 +6,7 @@ router.prefix('/api/users');
  *users0001 :用户列表接口
  *users0002 :个人用户查询接口
  */
-router.get('/users0001', function* (req, res, next) {
+router.get('/users0001', function* () {
 	yield this.body = users.getUserInfo(this.request.body);
 });
 
