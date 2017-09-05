@@ -7,28 +7,26 @@ let userInfo = {
    * @returns
    */
   getUserInfo(_param) {
-    let _userInfo = {}
-    let newUser = new usersModel({
-      name: _param.name,
-      password: _param.password,
-      email: _param.email,
-    });
-
-    newUser.save((err, user) => {
-      console.log(err)
-      return _userInfo
-    })
-    _userInfo = {
-      code: 200,
-      body: {
-        req: _param.title,
-        title: '用户接口',
-        cont: '用户接口--获取用户信心详情接口'
-      },
-      status: 'success'
+    return function (cb) {
+      let _userInfo = {}
+      let newUser = new usersModel({
+        name: _param.name,
+        password: _param.password,
+        email: _param.email,
+      })
+      newUser.save(function (info) {
+        _userInfo = {
+          code: 200,
+          body: {
+            req: _param.title,
+            title: '用户接口',
+            cont: '用户接口--获取用户信心详情接口'
+          },
+          status: info
+        }
+        cb(null, _userInfo);
+      })
     }
-    return _userInfo
   }
 }
-
 module.exports = userInfo;

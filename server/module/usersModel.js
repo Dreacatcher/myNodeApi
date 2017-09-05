@@ -8,28 +8,40 @@ class User {
   save(callback) {
     //存储用户信息
     let user = {
-      name: this.name,
-      password: this.password,
-      email: this.email
+      'name': this.name,
+      'password': this.password,
+      'email': this.email
     }
     //打开数据库
     mongodb.open(function (err, db) {
+     
+      console.log("连接成功！");
+      console.log(err);
+      
       if (err) {
         return callback(err);
       }
       //读取registeruser集合
-      db.collection('registeruser', function (err, collection) {
+      db.collection('usersInfo', function (err, collection) {
+        console.log("usersInfo连接成功！");
+        console.log("usersInfo连接成功！");
+        console.log("usersInfo连接成功！");
         if (err) {
           mongodb.close();
           return callback(err);
         }
         //用户信息插入registeruser集合
-        collection.insert(user, { safe: true }, function (err, user) {
+        collection.insert(user, function (err, user) {
+          console.log("insert成功！");
+          console.log("insert成功！");
+          console.log("insert成功！");
+          console.log("insert成功！");
+          console.log("user成功！"+JSON.stringify(user));
           mongodb.close();
           if (err) {
             return callback(err);
           }
-          callback(null, user[0]);
+          return callback(user.result.ok);
         });
       });
     });
@@ -40,7 +52,7 @@ class User {
       if (err) {
         return callback(err);
       }
-      db.collection('registeruser', function (err, collection) {
+      db.collection('usersInfo', function (err, collection) {
         if (err) {
           callback(err);
         }

@@ -10,10 +10,9 @@ router.get('/users0001', function* (req, res, next) {
 	yield this.body = users.getUserInfo(this.request.body);
 });
 
-router.post('/users0001', function* (ctx, next) {
-	yield this.body = users.getUserInfo(this.request.body);
-});
-
+router.post('/users0001', function* () {
+	this.body = yield users.getUserInfo(this.request.body);
+})
 
 module.exports = router;
 
