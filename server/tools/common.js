@@ -1,7 +1,7 @@
 var mongodb = require("../database/db");
 var markdown=require('markdown').markdown;
 
-class Post{
+class Common{
 	
 }
 function Post(name,title,post) {

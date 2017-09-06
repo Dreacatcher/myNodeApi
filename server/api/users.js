@@ -1,5 +1,10 @@
-let usersModel = require('../module/usersModel');
+let RegisteredUser = require('../module/registeredUser');
 let UsersInfo = require('../module/getUsersInfo');
+let crypto = require("crypto");
+var flash = require("connect-flash"); // 往session增加字段
+//生成MD5加密
+var md5 = crypto.createHash('md5');
+
 let userInfo = {
   /**
    * getUserInfo
@@ -10,11 +15,10 @@ let userInfo = {
   registeredUser(_param) {
     return function (cb) {
       let _userInfo = {}
-      let newUser = new usersModel({
-
-      })
+      let _password=md5.update(_param.password).digest('hex');
+      let newUser = new RegisteredUser({})
       newUser.name = _param.name
-      newUser.password = _param.password
+      newUser.password = _password
       newUser.email = _param.email
       newUser.get(_param.name, function (err, user) {
         //用户已存在
@@ -43,7 +47,6 @@ let userInfo = {
           cb(null, _userInfo);
         })
       })
-
     }
   },
   getUsersInfo(_param) {

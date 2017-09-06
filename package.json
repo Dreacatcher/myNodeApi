@@ -22,6 +22,9 @@
     "koa-views": "^3.1.0"
   },
   "devDependencies": {
+    "Base64": "^1.0.1",
+    "connect-flash": "^0.1.1",
+    "crypto": "^1.0.1",
     "markdown": "^0.5.0",
     "mongodb": "^2.2.31",
     "nodemon": "^1.8.1"

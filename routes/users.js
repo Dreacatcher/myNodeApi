@@ -11,6 +11,8 @@ router.get('/users0001', function* () {
 });
 
 router.post('/users0001', function* () {
+	console.log('this.request.body')
+	console.log(this.request)
 	this.body = yield users.registeredUser(this.request.body);
 })
 
