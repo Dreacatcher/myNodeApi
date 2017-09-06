@@ -2,7 +2,7 @@
  * @Author: lucm 
  * @Date: 2017-09-06 17:24:24 
  * @Last Modified by: lucm
- * @Last Modified time: 2017-09-06 17:57:12
+ * @Last Modified time: 2017-09-06 21:57:51
  */
 
 let base64_encode = require('Base64').encode
@@ -32,29 +32,15 @@ class Validate {
     }
     return _requestParam
   }
-  validateHead(ctx) {
-    if(packageParamBase(ctx.request.body)==ctx.request.body.sign){
+  validateHead(ctx,callback) {
+    if (packageParamBase(ctx.request.body) == ctx.request.body.sign) {
       // 签名通过
-      
-    }
-    const resource = ctx.url.replace('/ajax/', '');
-    const host = ctx.host.replace('admin', 'api');
-    const url = ctx.protocol + '://' + host + '/' + resource;
-
-    const body = JSON.stringify(ctx.request.body) == '{}' ? '' : JSON.stringify(ctx.request.body);
-    const hdrs = {
-      'Content-Type': 'application/json',
-      'Accept': ctx.header.accept || '*/*',
-      'Authorization': 'Bearer ' + ctx.state.user.jwt,
-    };
-    try {
-      const response = await fetch(url, { method: ctx.method, body: body, headers: hdrs });
-      const json = response.headers.get('content-type').match(/application\/json/);
-      ctx.status = response.status;
-      ctx.body = json ? await response.json() : await response.text();
-    } catch (e) { // eg offline, DNS fail, etc
-      ctx.status = 500;
-      ctx.body = e.message;
+      if (ctx.header.contenType=='application/json'&&ctx.method=='POST') {
+        callback()
+      }else{
+        ctx.status = 500;
+        ctx.body = e.message;
+      }
     }
   }
 }
