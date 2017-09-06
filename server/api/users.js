@@ -11,11 +11,12 @@ let userInfo = {
     return function (cb) {
       let _userInfo = {}
       let newUser = new usersModel({
-        name: _param.name,
-        password: _param.password,
-        email: _param.email,
+
       })
-      newUser.get(newUser.name, function (err, user) {
+      newUser.name = _param.name
+      newUser.password = _param.password
+      newUser.email = _param.email
+      newUser.get(_param.name, function (err, user) {
         //用户已存在
         if (err) {
           console.log("用户已存在")
