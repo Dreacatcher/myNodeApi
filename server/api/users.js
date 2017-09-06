@@ -59,15 +59,25 @@ let userInfo = {
           // req.flash("error", err);
           // return res.redirect("/");
         }
-
-        _userInfo = {
-          code: 200,
-          body: {
-            datas: item
-          },
-          status: 'ok'
+        try {
+          _userInfo = {
+            code: 200,
+            body: {
+              datas: item
+            },
+            status: 'ok'
+          }
+          cb(null, _userInfo);
+        } catch (e) {
+          _userInfo = {
+            code: 200,
+            body: {
+              datas: e
+            },
+            status: 'error'
+          }
+          cb(null, _userInfo);
         }
-        cb(null, _userInfo);
       })
     }
   }
