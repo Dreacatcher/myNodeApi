@@ -3,5 +3,18 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  div
+    span 姓名：
+    input(class="name" placehold="请输入姓名")
+  div
+    span 密码：
+    input(class="psw" placehold="请输入姓名")
+  div
+    span email：
+    input(class="email" placehold="请输入姓名")
+  div
+    button(type="submit" class="submit") 提交
+    button(type="submit" class="query") 查询
   
-    
+  div(class="list")
+    p

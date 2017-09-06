@@ -7,11 +7,23 @@ router.prefix('/api/users');
  *users0002 :个人用户查询接口
  */
 router.get('/users0001', function* () {
-	yield this.body = users.getUserInfo(this.request.body);
+	yield this.body = users.registeredUser(this.request.body);
 });
 
 router.post('/users0001', function* () {
-	this.body = yield users.getUserInfo(this.request.body);
+	this.body = yield users.registeredUser(this.request.body);
+})
+
+
+/**
+ *users0002 :个人用户查询接口
+ */
+router.get('/users0002', function* () {
+	yield this.body = users.getUsersInfo(this.request.body);
+});
+
+router.post('/users0002', function* () {
+	this.body = yield users.getUsersInfo(this.request.body);
 })
 
 module.exports = router;

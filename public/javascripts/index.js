@@ -1,15 +1,32 @@
-$(function(){
-  var data={
-    name:'lucm_test1',
-    password:'psw123',
-    email:'13566@qq.com',
-  }
-  $.ajax({
-    type: 'POST',
-    url: 'http://localhost:3000/api/users/users0001',
-    data: data,
-    success: function(){
-      console.log("dddd")
+$(function () {
+  $('.submit').on('click', function () {
+    // 增加数据
+    var data = {
+      name: $('.name').val(),
+      password: $('.psw').val(),
+      email: $('.email').val(),
     }
+    $.ajax({
+      type: 'POST',
+      url: 'http://localhost:3000/api/users/users0001',
+      data: data,
+      success: function () {
+        console.log("dddd")
+      }
+    })
+  })
+
+  $('.query').on('click', function () {
+    // 显示数据
+    var data = {
+    }
+    $.ajax({
+      type: 'POST',
+      url: 'http://localhost:3000/api/users/users0002',
+      data: data,
+      success: function (data) {
+        console.log(data)
+      }
+    })
   })
 })

@@ -1,4 +1,5 @@
 let usersModel = require('../module/usersModel');
+let UsersInfo = require('../module/getUsersInfo');
 let userInfo = {
   /**
    * getUserInfo
@@ -6,7 +7,7 @@ let userInfo = {
    * @param {any} _param
    * @returns
    */
-  getUserInfo(_param) {
+  registeredUser(_param) {
     return function (cb) {
       let _userInfo = {}
       let newUser = new usersModel({
@@ -18,6 +19,7 @@ let userInfo = {
         //用户已存在
         if (err) {
           console.log("用户已存在")
+          console.log(err)
           // req.flash("error", err);
           // return res.redirect("/");
         }
@@ -41,6 +43,32 @@ let userInfo = {
         })
       })
 
+    }
+  },
+  getUsersInfo(_param) {
+    return function (cb) {
+      let _userInfo = {}
+      let newUser = new UsersInfo({
+      })
+      newUser.getAllUsers(function (err, item) {
+        //用户已存在
+        if (err) {
+          console.log("111用户已存在")
+          console.log(err)
+          console.log("222用户已存在")
+          // req.flash("error", err);
+          // return res.redirect("/");
+        }
+
+        _userInfo = {
+          code: 200,
+          body: {
+            datas: item
+          },
+          status: 'ok'
+        }
+        cb(null, _userInfo);
+      })
     }
   }
 }
