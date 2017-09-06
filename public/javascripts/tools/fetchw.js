@@ -2,7 +2,7 @@
  * @Author: lucm 
  * @Date: 2017-09-06 17:24:24 
  * @Last Modified by: lucm
- * @Last Modified time: 2017-09-06 22:10:12
+ * @Last Modified time: 2017-09-06 22:07:05
  */
 
 let base64_encode = require('Base64').encode
@@ -16,7 +16,7 @@ let appkey = 'vws3236ce4fdscsfdsecdserr3232fdsf30d835243czxc4fds'
 let siteid = '520100'
 
 // ******************************* Setting ***********************************/
-class Validate {
+class Fetch {
   packageParamBase(param) {
     let _param = param || {}
     let _sign = md5.update((base64_encode(JSON.stringify(_param) + appid)) + siteid + appkey).digest('hex');
@@ -32,16 +32,17 @@ class Validate {
     }
     return _requestParam
   }
-  validateHead(ctx,callback) {
-    if (this.packageParamBase(ctx.request.body) == ctx.request.body.sign) {
-      // 签名通过
-      if (ctx.header.contenType=='application/json'&&ctx.method=='POST') {
-        callback()
-      }else{
-        ctx.status = 500;
-        ctx.body = e.message;
+  getServerceDatas(_Param,url,callback) {
+   let  _resetParam=this.packageParamBase(_Param)
+    $.ajax({
+      type: 'POST',
+      url: url,
+      contenType:'application/json',
+      data: _resetParam,
+      success: function (datas) {
+        callback(datas)
       }
-    }
+    })
   }
 }
-module.exports = Validate
+module.exports = Fetch
