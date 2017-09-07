@@ -1,5 +1,6 @@
 const router = require('koa-router')();
 const users = require('../server/api/users');
+const validate = require('../server/tools/validate');
 router.prefix('/api/users');
 
 /**
@@ -13,6 +14,7 @@ router.get('/users0001', function* () {
 router.post('/users0001', function* () {
 	console.log('this.request.body')
 	console.log(this.request)
+	console.log(validate.packageParamBase(this.request.body));
 	this.body = yield users.registeredUser(this.request.body);
 })
 
