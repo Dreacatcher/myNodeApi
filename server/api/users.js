@@ -2,6 +2,8 @@ let RegisteredUser = require('../module/registeredUser');
 let UsersInfo = require('../module/getUsersInfo');
 let crypto = require("crypto");
 var flash = require("connect-flash"); // 往session增加字段
+const validate = require('../../server/tools/validate');
+const common = require('../../server/tools/common');
 //生成MD5加密
 var md5 = crypto.createHash('md5');
 
@@ -15,7 +17,7 @@ let userInfo = {
   registeredUser(_param) {
     return function (cb) {
       let _userInfo = {}
-      let _password=md5.update(_param.password).digest('hex');
+      let _password = md5.update(_param.password).digest('hex');
       let newUser = new RegisteredUser({})
       newUser.name = _param.name
       newUser.password = _password
@@ -51,35 +53,50 @@ let userInfo = {
   },
   getUsersInfo(_param) {
     return function (cb) {
-      let _userInfo = {}
-      let newUser = new UsersInfo({
-      })
-      newUser.getAllUsers(function (err, item) {
-        //用户已存在
-        if (err) {
-          console.log("111用户已存在")
-          console.log(err)
-          console.log("222用户已存在")
-          // req.flash("error", err);
-          // return res.redirect("/");
-        }
-        try {
-          _userInfo = {
+      validate.validateHead(_param, function (_validate) {
+
+
+        let newUser = new UsersInfo({
+        })
+        console.log('_validate')
+        console.log('_validate')
+        console.log(_validate)
+        let responseInfo = {}
+        if (_validate) {
+          newUser.getAllUsers(function (err, item) {
+            //用户已存在
+            if (err) {
+              console.log("111用户已存在")
+              console.log(err)
+              console.log("222用户已存在")
+              // req.flash("error", err);
+              // return res.redirect("/");
+            }
+            try {
+              responseInfo = {
+                code: 200,
+                datas: item,
+                status: '获取数据成功'
+              }
+              _userInfo = common.responseInfo(responseInfo)
+              cb(null, _userInfo);
+            } catch (e) {
+              responseInfo = {
+                code: 200,
+                datas: [],
+                status: e
+              }
+              _userInfo = common.responseInfo(responseInfo)
+              cb(null, _userInfo);
+            }
+          })
+        } else {
+          responseInfo = {
             code: 200,
-            body: {
-              datas: item
-            },
-            status: 'ok'
+            datas: [],
+            status: '验签失败'
           }
-          cb(null, _userInfo);
-        } catch (e) {
-          _userInfo = {
-            code: 200,
-            body: {
-              datas: e
-            },
-            status: 'error'
-          }
+          _userInfo = common.responseInfo(responseInfo)
           cb(null, _userInfo);
         }
       })

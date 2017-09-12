@@ -1,6 +1,5 @@
 const router = require('koa-router')();
 const users = require('../server/api/users');
-const validate = require('../server/tools/validate');
 router.prefix('/api/users');
 
 /**
@@ -24,14 +23,6 @@ router.get('/users0002', function* () {
 });
 
 router.post('/users0002', function* () {
-		// console.log('1111111111111111111111111')
-		// console.log('1111111111111111111111111')
-		// console.log(this.request.body)
-		// console.log('122222222222222222222222222')
-		// console.log('122222222222222222222222222')
-		// validate.validateHead(this.request.body,function* (){
-		// 	this.body = yield users.getUsersInfo(this.request.body);
-		// })
 	this.body = yield users.getUsersInfo(this.request.body);
 })
 
