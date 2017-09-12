@@ -6,9 +6,25 @@ var app = require('koa')()
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-
+const cors = require('koa-cors');
 // error handler
 onerror(app);
+//设置跨域访问
+app.use(cors({
+  origin: function (ctx) {
+    console.log(ctx)
+      // if (ctx.url === '/test') {
+      //     return "*"; // 允许来自所有域名请求
+      // }
+      // return 'http://localhost:8080';
+      return "*";
+  },
+  exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+  maxAge: 5,
+  credentials: true,
+  allowMethods: ['GET', 'POST', 'DELETE'],
+  allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+}))
 
 // global middlewares
 app.use(views('views', {
@@ -19,7 +35,7 @@ app.use(require('koa-bodyparser')());
 app.use(json());
 app.use(logger()); // console logger
 
-app.use(function *(next){
+app.use(function* (next) {
   var start = new Date;
   yield next;
   var ms = new Date - start;

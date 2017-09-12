@@ -12,9 +12,6 @@ router.get('/users0001', function* () {
 });
 
 router.post('/users0001', function* () {
-	console.log('this.request.body')
-	console.log(this.request)
-	console.log(validate.packageParamBase(this.request.body));
 	this.body = yield users.registeredUser(this.request.body);
 })
 
@@ -27,6 +24,14 @@ router.get('/users0002', function* () {
 });
 
 router.post('/users0002', function* () {
+		// console.log('1111111111111111111111111')
+		// console.log('1111111111111111111111111')
+		// console.log(this.request.body)
+		// console.log('122222222222222222222222222')
+		// console.log('122222222222222222222222222')
+		// validate.validateHead(this.request.body,function* (){
+		// 	this.body = yield users.getUsersInfo(this.request.body);
+		// })
 	this.body = yield users.getUsersInfo(this.request.body);
 })
 
