@@ -2,7 +2,7 @@
  * @Author: lucm 
  * @Date: 2017-09-06 17:24:24 
  * @Last Modified by: lucm
- * @Last Modified time: 2017-09-12 21:39:16
+ * @Last Modified time: 2017-09-13 09:35:41
  */
 
 //生成MD5签名加密
@@ -19,8 +19,6 @@ class Validate {
   packageParamBase(param) {
     let _param = param || {}
     let _sign = md5.update(encodeURI((Buffer(JSON.stringify(_param) + appid)) + siteid) + appkey).digest('hex');
-    // _sign = Buffer(_sign)
-    console.log(_sign)
     let _requestParam = {
       head: {
         appid: appid,
@@ -33,18 +31,13 @@ class Validate {
     return _requestParam
   }
   validateHead(ctx, callback) {
-     console.log('00000000000000000000')
-      console.log('00000000000000000000')
-    console.log(ctx)
     let _packageParamBase = this.packageParamBase(ctx.body)
-    console.log(_packageParamBase)
-    
     if (_packageParamBase.head.sign == ctx.head.sign) {
-      callback(true)
       //验签成功
+      callback(true)
     } else {
-      callback(false)
       // 验签失败
+      callback(false)
     }
   }
 }
