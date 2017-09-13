@@ -2,12 +2,10 @@
  * @Author: lucm 
  * @Date: 2017-09-06 17:24:24 
  * @Last Modified by: lucm
- * @Last Modified time: 2017-09-13 09:35:41
+ * @Last Modified time: 2017-09-13 10:03:27
  */
 
 //生成MD5签名加密
-let crypto = require('crypto');
-let md5 = crypto.createHash('md5');
 var Base64 = require('js-base64').Base64;
 var Buffer = require('buffer').Buffer;
 // ******************************* Setting ***********************************/
@@ -18,6 +16,8 @@ let siteid = '520100'
 class Validate {
   packageParamBase(param) {
     let _param = param || {}
+    let crypto = require('crypto');
+    let md5 = crypto.createHash('md5');
     let _sign = md5.update(encodeURI((Buffer(JSON.stringify(_param) + appid)) + siteid) + appkey).digest('hex');
     let _requestParam = {
       head: {
