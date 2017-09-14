@@ -1,4 +1,5 @@
 let mongodb = require("../db/usersDb.config");
+
 class User {
   constructor(name, password, email) {
     this.name = name;
@@ -12,8 +13,6 @@ class User {
       password: this.password,
       email: this.email
     }
-    console.log("存储用户信息");
-    console.log(user)
     //打开数据库
     mongodb.open(function (err, db) {
       if (err) {

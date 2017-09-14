@@ -5,6 +5,7 @@ let DeleteUserInfos = require('../module/deleteUserInfos');
 var flash = require("connect-flash"); // 往session增加字段
 const validate = require('../../server/tools/validate');
 const common = require('../../server/tools/common');
+let UserModleCommon = require("../module/common/userModleCommon");
 //生成MD5加密
 let userInfo = {
   /**
@@ -16,36 +17,42 @@ let userInfo = {
   registeredUser(_param) {
     return function (cb) {
       let _userInfo = {}
-      let newUser = new RegisteredUser({})
-      newUser.name = _param.name
-      newUser.password = _param._password
-      newUser.email = _param.email
-      newUser.get(_param.name, function (err, user) {
+      let newUser = new RegisteredUser()
+      newUser.name = _param.body.name
+      newUser.password = _param.body.password
+      newUser.email = _param.body.email
+      let userModleCommon = new UserModleCommon()
+      userModleCommon.getName(_param.body.name, function (err, user) {
         //用户已存在
+        responseInfo = {
+          code: 500,
+          datas: ['注册失败'],
+          status: 'error'
+        }
+        _userInfo = common.responseInfo(responseInfo)
         if (err) {
-          console.log("用户已存在")
-          console.log(err)
-          // req.flash("error", err);
-          // return res.redirect("/");
-        }
-        if (user) {//用户存在
-          console.log("用户存在")
-          // req.flash("error", '用户已经存在');
-          // return res.redirect("/register");
-        }
-        //用户不存在
-        newUser.save(function (info) {
-          _userInfo = {
-            code: 200,
-            body: {
-              req: _param.title,
-              title: '用户接口',
-              cont: '用户接口--获取用户信心详情接口'
-            },
-            status: info
-          }
           cb(null, _userInfo);
-        })
+        }
+        if (user&&user.name&&user.name==!'') {//用户存在
+          responseInfo = {
+            code: 200,
+            datas: ['用户已存在'],
+            status: 'ok'
+          }
+          _userInfo = common.responseInfo(responseInfo)
+          cb(null, _userInfo);
+        } else {
+          //用户不存在
+          newUser.save(function (info) {
+            responseInfo = {
+              code: 200,
+              datas: ['注册成功'],
+              status: 'ok'
+            }
+            _userInfo = common.responseInfo(responseInfo)
+            cb(null, _userInfo);
+          })
+        }
       })
     }
   },
@@ -111,7 +118,7 @@ let userInfo = {
             status: '查询条件为空'
           }
           _userInfo = common.responseInfo(responseInfo)
-          isCanQuery =true
+          isCanQuery = true
           cb(null, _userInfo);
         }
         if (isCanQuery) {
