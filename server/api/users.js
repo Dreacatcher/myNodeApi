@@ -6,7 +6,6 @@ const validate = require('../../server/tools/validate');
 const common = require('../../server/tools/common');
 //生成MD5加密
 var md5 = crypto.createHash('md5');
-
 let userInfo = {
   /**
    * getUserInfo
@@ -54,23 +53,20 @@ let userInfo = {
   getUsersInfo(_param) {
     return function (cb) {
       validate.validateHead(_param, function (_validate) {
-
-
         let newUser = new UsersInfo({
         })
-        console.log('_validate')
-        console.log('_validate')
-        console.log(_validate)
         let responseInfo = {}
         if (_validate) {
           newUser.getAllUsers(function (err, item) {
             //用户已存在
             if (err) {
-              console.log("111用户已存在")
-              console.log(err)
-              console.log("222用户已存在")
-              // req.flash("error", err);
-              // return res.redirect("/");
+              responseInfo = {
+                code: 500,
+                datas: [],
+                status: err.message
+              }
+              _userInfo = common.responseInfo(responseInfo)
+              cb(null, _userInfo);
             }
             try {
               responseInfo = {
