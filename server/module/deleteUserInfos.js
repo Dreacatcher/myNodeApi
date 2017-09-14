@@ -4,7 +4,7 @@ class deleteUserInfos {
     this.name = name || '';
     this.email = email || '';
   }
-  save(callback) {
+  deleteUserInfo(callback) {
     //存储用户信息
     let user = {
       name: this.name,

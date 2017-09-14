@@ -1,5 +1,7 @@
 let RegisteredUser = require('../module/registeredUser');
 let UsersInfo = require('../module/getUsersInfo');
+let GetMyInfos = require('../module/getMyInfos');
+let DeleteUserInfos = require('../module/deleteUserInfos');
 var flash = require("connect-flash"); // 往session增加字段
 const validate = require('../../server/tools/validate');
 const common = require('../../server/tools/common');
@@ -95,14 +97,75 @@ let userInfo = {
       })
     }
   },
+  getMyInfo(_param) {
+    return function (cb) {
+      validate.validateHead(_param, function (_validate) {
+        let getMyInfos = new GetMyInfos({
+        })
+        let responseInfo = {}
+        let isCanQuery = false
+        if (_param.name == '' || _param.email == '') {
+          responseInfo = {
+            code: 200,
+            datas: [],
+            status: '查询条件为空'
+          }
+          _userInfo = common.responseInfo(responseInfo)
+          isCanQuery =true
+          cb(null, _userInfo);
+        }
+        if (isCanQuery) {
+          if (_validate) {
+            getMyInfos.getAllUsers(function (err, item) {
+              //用户已存在
+              if (err) {
+                responseInfo = {
+                  code: 500,
+                  datas: [],
+                  status: err.message
+                }
+                _userInfo = common.responseInfo(responseInfo)
+                cb(null, _userInfo);
+              }
+              try {
+                responseInfo = {
+                  code: 200,
+                  datas: item,
+                  status: '获取数据成功'
+                }
+                _userInfo = common.responseInfo(responseInfo)
+                cb(null, _userInfo);
+              } catch (e) {
+                responseInfo = {
+                  code: 200,
+                  datas: [],
+                  status: e
+                }
+                _userInfo = common.responseInfo(responseInfo)
+                cb(null, _userInfo);
+              }
+            })
+          } else {
+            responseInfo = {
+              code: 200,
+              datas: [],
+              status: '验签失败'
+            }
+            _userInfo = common.responseInfo(responseInfo)
+            cb(null, _userInfo);
+          }
+        }
+      })
+    }
+  },
   deleteUserInfos(_param) {
     return function (cb) {
       validate.validateHead(_param, function (_validate) {
-        let newUser = new UsersInfo({
+        let deleteUserInfos = new DeleteUserInfos({
         })
         let responseInfo = {}
         if (_validate) {
-          newUser.getAllUsers(function (err, item) {
+          deleteUserInfos.deleteUserInfo(function (err, item) {
             //用户已存在
             if (err) {
               responseInfo = {
@@ -117,7 +180,7 @@ let userInfo = {
               responseInfo = {
                 code: 200,
                 datas: item,
-                status: '获取数据成功'
+                status: '删除成功'
               }
               _userInfo = common.responseInfo(responseInfo)
               cb(null, _userInfo);

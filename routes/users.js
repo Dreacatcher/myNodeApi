@@ -16,7 +16,7 @@ router.post('/users0001', function* () {
 
 
 /**
- *users0002 :个人用户查询接口
+ *users0002 :查询所以用户信息接口
  */
 router.get('/users0002', function* () {
 	yield this.body = users.getUsersInfo(this.request.body);
@@ -26,5 +26,28 @@ router.post('/users0002', function* () {
 	this.body = yield users.getUsersInfo(this.request.body);
 })
 
+
+/**
+ *users0003 :查询个人信息接口
+ */
+router.get('/users0003', function* () {
+	yield this.body = users.getMyInfo(this.request.body);
+});
+
+router.post('/users0003', function* () {
+	this.body = yield users.getMyInfo(this.request.body);
+})
+
+
+/**
+ *users0004 :删除个人信息
+ */
+router.get('/users0004', function* () {
+	yield this.body = users.deleteUserInfos(this.request.body);
+});
+
+router.post('/users0004', function* () {
+	this.body = yield users.deleteUserInfos(this.request.body);
+})
 module.exports = router;
 
