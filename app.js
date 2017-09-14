@@ -12,7 +12,7 @@ onerror(app);
 //设置跨域访问
 app.use(cors({
   origin: function (ctx) {
-    console.log(ctx)
+    // console.log(ctx)
       // if (ctx.url === '/test') {
       //     return "*"; // 允许来自所有域名请求
       // }

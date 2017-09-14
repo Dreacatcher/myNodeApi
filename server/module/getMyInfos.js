@@ -8,6 +8,7 @@ class getMyInfos {
   getInfos(callback) {//读取用户信息
     //打开数据库
     mongodb.open(function (err, db) {
+      console.log('查询用户信息')
       if (err) {
         return callback(err);
       }

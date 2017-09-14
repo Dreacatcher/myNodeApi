@@ -107,11 +107,12 @@ let userInfo = {
   getMyInfo(_param) {
     return function (cb) {
       validate.validateHead(_param, function (_validate) {
-        let getMyInfos = new GetMyInfos({
-        })
+        let getMyInfos = new GetMyInfos()
+        getMyInfos.name = _param.body.name
+        getMyInfos.email = _param.body.email
         let responseInfo = {}
         let isCanQuery = false
-        if (_param.name == '' || _param.email == '') {
+        if (_param.body.name == '' || _param.body.email == '') {
           responseInfo = {
             code: 200,
             datas: [],
@@ -123,7 +124,7 @@ let userInfo = {
         }
         if (isCanQuery) {
           if (_validate) {
-            getMyInfos.getAllUsers(function (err, item) {
+            getMyInfos.getInfos(function (err, item) {
               //用户已存在
               if (err) {
                 responseInfo = {
@@ -168,11 +169,13 @@ let userInfo = {
   deleteUserInfos(_param) {
     return function (cb) {
       validate.validateHead(_param, function (_validate) {
-        let deleteUserInfos = new DeleteUserInfos({
-        })
+        let deleteUserInfos = new DeleteUserInfos()
+        deleteUserInfos.name=_param.body.name
+        deleteUserInfos.email=_param.body.email
+
         let responseInfo = {}
         if (_validate) {
-          deleteUserInfos.deleteUserInfo(function (err, item) {
+          deleteUserInfos.deleteUserInfo(function (err, result) {
             //用户已存在
             if (err) {
               responseInfo = {
@@ -187,7 +190,7 @@ let userInfo = {
               responseInfo = {
                 code: 200,
                 datas: item,
-                status: '删除成功'
+                status: result
               }
               _userInfo = common.responseInfo(responseInfo)
               cb(null, _userInfo);
