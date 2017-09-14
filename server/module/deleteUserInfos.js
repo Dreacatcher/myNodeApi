@@ -1,19 +1,15 @@
 let mongodb = require("../db/usersDb.config");
-class getNewUserInfos {
-  constructor(name, password, email) {
-    this.name = name;
-    this.password = password;
-    this.email = email;
+class deleteUserInfos {
+  constructor(name, email) {
+    this.name = name || '';
+    this.email = email || '';
   }
   save(callback) {
     //存储用户信息
     let user = {
       name: this.name,
-      password: this.password,
       email: this.email
     }
-    console.log("存储用户信息");
-    console.log(user)
     //打开数据库
     mongodb.open(function (err, db) {
       if (err) {
@@ -25,18 +21,32 @@ class getNewUserInfos {
           mongodb.close();
           return callback(err);
         }
-        //用户信息插入registeruser集合
-        collection.insert(user, function (err, user) {
-          mongodb.close();
-          if (err) {
-            return callback(err);
-          }
-          return callback(user.result.ok);
-        });
+        if (this.name && this.name != '') {
+          this.getName(this.name, function () {
+            collection.remove(this.name, function (err, result) {
+              mongodb.close();
+              if (err) {
+                return callback(err);
+              }
+              return callback(result);
+            });
+          })
+        }
+        if (this.email && this.email != '') {
+          this.getName(this.email, function () {
+            collection.remove(this.email, function (err, result) {
+              mongodb.close();
+              if (err) {
+                return callback(err);
+              }
+              return callback(result);
+            });
+          })
+        }
       });
     });
   }
-  get(name, callback) {//读取用户信息
+  getName(name, callback) {//读取用户信息
     //打开数据库
     mongodb.open(function (err, db) {
       if (err) {
@@ -59,5 +69,28 @@ class getNewUserInfos {
       });
     });
   };
+  getEmail(email, callback) {//读取用户信息
+    //打开数据库
+    mongodb.open(function (err, db) {
+      if (err) {
+        return callback(err);
+      }
+      db.collection('usersInfo', function (err, collection) {
+        if (err) {
+          callback(err);
+        }
+        //查找用户名
+        collection.findOne({
+          email: email
+        }, function (err, user) {
+          mongodb.close();
+          if (err) {
+            return callback(err);
+          }
+          callback(null, user);
+        });
+      });
+    });
+  };
 }
-module.exports = getNewUserInfos;
+module.exports = deleteUserInfos;
