@@ -6,20 +6,26 @@ class getMyInfos {
     this.email = email;
   }
   getInfos(callback) {//读取用户信息
+    let self =this
+    console.log('查询条件为空222')
+    console.log(self)
+    console.log('查询条件为空222')
+    
     //打开数据库
     mongodb.open(function (err, db) {
       console.log('查询用户信息')
       if (err) {
         return callback(err);
       }
+      
       db.collection('usersInfo', function (err, collection) {
         if (err) {
           callback(err);
         }
-        if (!this.name == '') {
+        if (!self.name == '') {
           //查找用户名
           collection.find({
-            name: this.name
+            name: self.name
           }).sort({
             time: -1
           }).toArray(function (err, item) {
@@ -30,10 +36,10 @@ class getMyInfos {
             callback(null, item);//成功返回查询的文章
           });
         }
-        if (!this.email == '') {
+        if (!self.email == '') {
           //查找用户名
           collection.find({
-            email: this.email
+            email: self.email
           }).sort({
             time: -1
           }).toArray(function (err, item) {

@@ -110,20 +110,29 @@ let userInfo = {
         let getMyInfos = new GetMyInfos()
         getMyInfos.name = _param.body.name
         getMyInfos.email = _param.body.email
+        console.log('查询条件为空')
+        console.log(getMyInfos)
+        console.log('查询条件为空')
         let responseInfo = {}
-        let isCanQuery = false
+        let isCanQuery = true
+        console.log("查询条件为空23")
         if (_param.body.name == '' || _param.body.email == '') {
+          console.log("查询条件为空33")
           responseInfo = {
             code: 200,
             datas: [],
             status: '查询条件为空'
           }
           _userInfo = common.responseInfo(responseInfo)
-          isCanQuery = true
+          isCanQuery = false
           cb(null, _userInfo);
         }
+        console.log("查询条件为空1111")
+        console.log(isCanQuery)
         if (isCanQuery) {
+          console.log("查询条件为空44")
           if (_validate) {
+            console.log("查询条件为空55")
             getMyInfos.getInfos(function (err, item) {
               //用户已存在
               if (err) {
