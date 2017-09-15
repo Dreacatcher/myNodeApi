@@ -7,17 +7,11 @@ class getMyInfos {
   }
   getInfos(callback) {//读取用户信息
     let self =this
-    console.log('查询条件为空222')
-    console.log(self)
-    console.log('查询条件为空222')
-    
     //打开数据库
     mongodb.open(function (err, db) {
-      console.log('查询用户信息')
       if (err) {
         return callback(err);
       }
-      
       db.collection('usersInfo', function (err, collection) {
         if (err) {
           callback(err);
