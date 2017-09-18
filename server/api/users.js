@@ -22,8 +22,8 @@ let userInfo = {
       newUser.name = _param.body.name
       newUser.password = _param.body.password
       newUser.email = _param.body.email
-      let userModleCommon = new UserModleCommon()
-      userModleCommon.getName(_param.body.name, function (err, user) {
+
+      newUser.get(_param.body.name, function (err, user) {
         //用户已存在
         responseInfo = {
           code: 500,
@@ -34,7 +34,7 @@ let userInfo = {
         if (err) {
           cb(null, _userInfo);
         }
-        if (user && user.name && user.name == !'') {//用户存在
+        if (user && user.name && user.name == newUser.name) {//用户存在
           responseInfo = {
             code: 200,
             datas: ['用户已存在'],
