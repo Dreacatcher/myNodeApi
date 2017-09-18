@@ -49,5 +49,17 @@ router.get('/users0004', function* () {
 router.post('/users0004', function* () {
 	this.body = yield users.deleteUserInfos(this.request.body);
 })
+
+/**
+ *users0004 :登陆除个人信息
+ */
+router.get('/users0005', function* () {
+	yield this.body = users.loginUserInfos(this.request.body);
+});
+
+router.post('/users0005', function* () {
+	this.body = yield users.loginUserInfos(this.request.body);
+})
+
 module.exports = router;
 

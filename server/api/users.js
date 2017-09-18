@@ -2,6 +2,7 @@ let RegisteredUser = require('../module/registeredUser');
 let UsersInfo = require('../module/getUsersInfo');
 let GetMyInfos = require('../module/getMyInfos');
 let DeleteUserInfos = require('../module/deleteUserInfos');
+let Login = require('../module/users/login');
 var flash = require("connect-flash"); // 往session增加字段
 const validate = require('../../server/tools/validate');
 const common = require('../../server/tools/common');
@@ -33,7 +34,7 @@ let userInfo = {
         if (err) {
           cb(null, _userInfo);
         }
-        if (user&&user.name&&user.name==!'') {//用户存在
+        if (user && user.name && user.name == !'') {//用户存在
           responseInfo = {
             code: 200,
             datas: ['用户已存在'],
@@ -170,8 +171,8 @@ let userInfo = {
     return function (cb) {
       validate.validateHead(_param, function (_validate) {
         let deleteUserInfos = new DeleteUserInfos()
-        deleteUserInfos.name=_param.body.name
-        deleteUserInfos.email=_param.body.email
+        deleteUserInfos.name = _param.body.name
+        deleteUserInfos.email = _param.body.email
 
         let responseInfo = {}
         if (_validate) {
@@ -216,5 +217,67 @@ let userInfo = {
       })
     }
   },
+  loginUserInfos(_param) {
+    return function (cb) {
+      validate.validateHead(_param, function (_validate) {
+        let login = new Login()
+        login.name = _param.body.name
+        login.password = _param.body.password
+
+        let responseInfo = {}
+        if (_validate) {
+          login.userLogin(function (err, result) {
+            //用户已存在
+            if (err) {
+              responseInfo = {
+                code: 500,
+                datas: [],
+                status: err.message
+              }
+              _userInfo = common.responseInfo(responseInfo)
+              cb(null, _userInfo);
+            }
+            try {
+              if (login.name == result[0].name && login.password == result[0].password) {
+                responseInfo = {
+                  code: 200,
+                  datas: '登录成功',
+                  status: '登录成功'
+                }
+                console.log('登录成功')
+                _userInfo = common.responseInfo(responseInfo)
+                cb(null, _userInfo);
+              } else {
+                responseInfo = {
+                  code: 200,
+                  datas: '登录失败',
+                  status: '登录失败'
+                }
+                console.log('登录失败')
+                _userInfo = common.responseInfo(responseInfo)
+                cb(null, _userInfo);
+              }
+            } catch (e) {
+              responseInfo = {
+                code: 200,
+                datas: [],
+                status: e
+              }
+              _userInfo = common.responseInfo(responseInfo)
+              cb(null, _userInfo);
+            }
+          })
+        } else {
+          responseInfo = {
+            code: 200,
+            datas: [],
+            status: '验签失败'
+          }
+          _userInfo = common.responseInfo(responseInfo)
+          cb(null, _userInfo);
+        }
+      })
+    }
+  }
 }
 module.exports = userInfo;
