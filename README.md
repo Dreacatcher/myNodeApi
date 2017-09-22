@@ -48,3 +48,13 @@ npm run dev
 
 # build for production with minification
 npm run build  
+
+
+
+#### 备注
+```
+### mongodb
+#### mongod --dbpath=/root/luchaoming/mongodb/log --fork --logpath log/mongodb.log
+> ERROR: child process failed, exited with error number 1
+> 解决方案：指定log的路径  --logpath log/mongodb.log
+```

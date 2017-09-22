@@ -8,7 +8,7 @@ $(function () {
     }
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:3000/api/users/users0001',
+      url: 'http://120.25.197.246:3000/api/users/users0001',
       data: data,
       success: function () {
         console.log("dddd")
@@ -22,7 +22,7 @@ $(function () {
     }
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:3000/api/users/users0002',
+      url: 'http://120.25.197.246:3000/api/users/users0002',
       data: data,
       success: function (data) {
         console.log(data)
