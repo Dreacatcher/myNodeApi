@@ -24,13 +24,22 @@ let userInfo = {
       newUser.email = _param.body.email
 
       newUser.get(_param.body.name, function (err, user) {
-        console.log(err.message)
+        console.log(err)
         //用户已存在
-        responseInfo = {
-          code: 500,
-          datas: ['注册失败'],
-          status: err.message
+        if(err&&err.message){
+          responseInfo = {
+            code: 500,
+            datas: ['注册失败'],
+            status: err.message
+          }
+        }else{
+          responseInfo = {
+            code: 500,
+            datas: ['注册失败'],
+            status: 'error'
+          }
         }
+        
         _userInfo = common.responseInfo(responseInfo)
         if (err) {
           cb(null, _userInfo);
