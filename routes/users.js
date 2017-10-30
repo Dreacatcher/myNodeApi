@@ -9,9 +9,8 @@ router.prefix('/api/users');
 router.get('/users0001', function* () {
 	yield this.body = users.registeredUser(this.request.body);
 });
-
 router.post('/users0001', function* () {
-	this.body = yield users.registeredUser(this.request.body);
+	this.body = yield users.registeredUser(this.request.body,this.request);
 })
 
 
@@ -19,11 +18,11 @@ router.post('/users0001', function* () {
  *users0002 :查询所以用户信息接口
  */
 router.get('/users0002', function* () {
-	yield this.body = users.getUsersInfo(this.request.body);
+	yield this.body = users.getUsersInfo(this.request.body,this.request);
 });
 
 router.post('/users0002', function* () {
-	this.body = yield users.getUsersInfo(this.request.body);
+	this.body = yield users.getUsersInfo(this.request.body,this.request);
 })
 
 
@@ -35,7 +34,7 @@ router.get('/users0003', function* () {
 });
 
 router.post('/users0003', function* () {
-	this.body = yield users.getMyInfo(this.request.body);
+	this.body = yield users.getMyInfo(this.request.body,this.request);
 })
 
 
@@ -47,7 +46,7 @@ router.get('/users0004', function* () {
 });
 
 router.post('/users0004', function* () {
-	this.body = yield users.deleteUserInfos(this.request.body);
+	this.body = yield users.deleteUserInfos(this.request.body,this.request);
 })
 
 /**
@@ -58,7 +57,7 @@ router.get('/users0005', function* () {
 });
 
 router.post('/users0005', function* () {
-	this.body = yield users.loginUserInfos(this.request.body);
+	this.body = yield users.loginUserInfos(this.request.body,this.request);
 })
 
 module.exports = router;

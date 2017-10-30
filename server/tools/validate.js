@@ -2,7 +2,7 @@
  * @Author: lucm 
  * @Date: 2017-09-06 17:24:24 
  * @Last Modified by: lucm
- * @Last Modified time: 2017-10-30 14:07:45
+ * @Last Modified time: 2017-10-30 16:10:21
  */
 
 //生成MD5签名加密
@@ -30,15 +30,21 @@ class Validate {
     }
     return _requestParam
   }
-  validateHead(ctx, callback) {
+  validateHead(ctx, _headParam, callback) {
     let _packageParamBase = this.packageParamBase(ctx.body)
-    if (_packageParamBase.head.sign == ctx.head.sign) {
-      //验签成功
-      callback(true)
+    if (_headParam.header['content-type'] == 'application/json;charset=UTF-8') {
+      if (_packageParamBase.head.sign == ctx.head.sign) {
+        //验签成功
+        callback(true)
+      } else {
+        // 验签失败
+        callback(false)
+      }
     } else {
-      // 验签失败
+      // 头部content-type检验失败
       callback(false)
     }
+
   }
 }
 module.exports = new Validate()

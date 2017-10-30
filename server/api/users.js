@@ -15,9 +15,9 @@ let userInfo = {
    * @param {any} _param
    * @returns
    */
-  registeredUser(_param) {
+  registeredUser(_param, _headParam) {
     return function (cb) {
-      validate.validateHead(_param, function (_validate) {
+      validate.validateHead(_param, _headParam, function (_validate) {
         if (_validate) {
           let _userInfo = {}
           let newUser = new RegisteredUser()
@@ -78,9 +78,9 @@ let userInfo = {
       })
     }
   },
-  getUsersInfo(_param) {
+  getUsersInfo(_param, _headParam) {
     return function (cb) {
-      validate.validateHead(_param, function (_validate) {
+      validate.validateHead(_param, _headParam, function (_validate) {
         let newUser = new UsersInfo({
         })
         let responseInfo = {}
@@ -126,9 +126,9 @@ let userInfo = {
       })
     }
   },
-  getMyInfo(_param) {
+  getMyInfo(_param, _headParam) {
     return function (cb) {
-      validate.validateHead(_param, function (_validate) {
+      validate.validateHead(_param, _headParam, function (_validate) {
         let getMyInfos = new GetMyInfos()
         getMyInfos.name = _param.body.name
         getMyInfos.email = _param.body.email
@@ -188,9 +188,9 @@ let userInfo = {
       })
     }
   },
-  deleteUserInfos(_param) {
+  deleteUserInfos(_param, _headParam) {
     return function (cb) {
-      validate.validateHead(_param, function (_validate) {
+      validate.validateHead(_param, _headParam, function (_validate) {
         let deleteUserInfos = new DeleteUserInfos()
         deleteUserInfos.name = _param.body.name
         deleteUserInfos.email = _param.body.email
@@ -238,9 +238,9 @@ let userInfo = {
       })
     }
   },
-  loginUserInfos(_param) {
+  loginUserInfos(_param, _headParam) {
     return function (cb) {
-      validate.validateHead(_param, function (_validate) {
+      validate.validateHead(_param, _headParam, function (_validate) {
         let login = new Login()
         login.name = _param.body.name
         login.password = _param.body.password
