@@ -17,52 +17,63 @@ let userInfo = {
    */
   registeredUser(_param) {
     return function (cb) {
-      let _userInfo = {}
-      let newUser = new RegisteredUser()
-      newUser.name = _param.body.name
-      newUser.password = _param.body.password
-      newUser.email = _param.body.email
+      validate.validateHead(_param, function (_validate) {
+        if (_validate) {
+          let _userInfo = {}
+          let newUser = new RegisteredUser()
+          newUser.name = _param.body.name
+          newUser.password = _param.body.password
+          newUser.email = _param.body.email
+          newUser.get(_param.body.name, function (err, user) {
+            console.log(err)
+            //用户已存在
+            if (err && err.message) {
+              responseInfo = {
+                code: 500,
+                datas: ['注册失败'],
+                status: err.message
+              }
+            } else {
+              responseInfo = {
+                code: 500,
+                datas: ['注册失败'],
+                status: 'error'
+              }
+            }
 
-      newUser.get(_param.body.name, function (err, user) {
-        console.log(err)
-        //用户已存在
-        if(err&&err.message){
-          responseInfo = {
-            code: 500,
-            datas: ['注册失败'],
-            status: err.message
-          }
-        }else{
-          responseInfo = {
-            code: 500,
-            datas: ['注册失败'],
-            status: 'error'
-          }
-        }
-        
-        _userInfo = common.responseInfo(responseInfo)
-        if (err) {
-          cb(null, _userInfo);
-        }
-        if (user && user.name && user.name == newUser.name) {//用户存在
+            _userInfo = common.responseInfo(responseInfo)
+            if (err) {
+              cb(null, _userInfo);
+            }
+            if (user && user.name && user.name == newUser.name) {//用户存在
+              responseInfo = {
+                code: 200,
+                datas: ['用户已存在'],
+                status: 'ok'
+              }
+              _userInfo = common.responseInfo(responseInfo)
+              cb(null, _userInfo);
+            } else {
+              //用户不存在
+              newUser.save(function (info) {
+                responseInfo = {
+                  code: 200,
+                  datas: ['注册成功'],
+                  status: 'ok'
+                }
+                _userInfo = common.responseInfo(responseInfo)
+                cb(null, _userInfo);
+              })
+            }
+          })
+        } else {
           responseInfo = {
             code: 200,
-            datas: ['用户已存在'],
-            status: 'ok'
+            datas: [],
+            status: '验签失败'
           }
           _userInfo = common.responseInfo(responseInfo)
           cb(null, _userInfo);
-        } else {
-          //用户不存在
-          newUser.save(function (info) {
-            responseInfo = {
-              code: 200,
-              datas: ['注册成功'],
-              status: 'ok'
-            }
-            _userInfo = common.responseInfo(responseInfo)
-            cb(null, _userInfo);
-          })
         }
       })
     }
