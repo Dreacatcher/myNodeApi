@@ -29,11 +29,14 @@
     "crypto": "^1.0.1",
     "js-base64": "^2.3.2",
     "koa-cors": "^0.0.16",
+    "koa-generic-session": "^2.0.0",
+    "koa-redis": "^3.1.1",
     "koa2-cors": "^2.0.3",
     "markdown": "^0.5.0",
     "md5": "^2.2.1",
     "mds": "^0.1.7",
     "mongodb": "^2.2.31",
-    "nodemon": "^1.8.1"
+    "nodemon": "^1.8.1",
+    "redis-connection-pool": "^1.6.1"
   }
 }
