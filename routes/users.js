@@ -3,7 +3,7 @@ const users = require('../server/api/users');
 router.prefix('/api/users');
 
 /**
- *users0001 :用户列表接口
+ *users0001 :注册
  *users0002 :个人用户查询接口
  */
 router.get('/users0001', function* () {
