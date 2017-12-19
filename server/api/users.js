@@ -262,12 +262,7 @@ let userInfo = {
             }
             try {
               if (login.name == result[0].name && login.password == result[0].password) {
-                responseInfo = {
-                  code: 200,
-                  datas: '登录成功',
-                  status: '登录成功'
-                }
-                console.log('登录成功')
+                result.message ='登录成功'
                 _userInfo = common.responseInfo(result)
                 cb(null, _userInfo);
               } else {
@@ -276,7 +271,7 @@ let userInfo = {
                 //   datas: '登录失败',
                 //   status: '登录失败'
                 // }
-                result.errMessge ='登录失败'
+                result.message ='登录失败'
                 console.log('登录失败')
                 _userInfo = common.responseInfo(result)
                 cb(null, _userInfo);
@@ -297,7 +292,7 @@ let userInfo = {
           //   datas: [],
           //   status: '验签失败'
           // }
-          result.errMessge ='验签失败'
+          result.message ='验签失败'
           _userInfo = common.responseInfo(result)
           cb(null, _userInfo);
         }
