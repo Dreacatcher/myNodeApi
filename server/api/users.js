@@ -248,16 +248,14 @@ let userInfo = {
         let responseInfo = {}
         if (_validate) {
           login.userLogin(function (err, result) {
-            console.log(err)
-            console.log(result)
             //用户已存在
             if (err) {
-              // responseInfo = {
-              //   code: 500,
-              //   datas: [],
-              //   status: err.message
-              // }
-              _userInfo = common.responseInfo(result)
+              responseInfo = {
+                code: 500,
+                datas: [],
+                status: err.message
+              }
+              _userInfo = common.responseInfo(responseInfo)
               cb(null, _userInfo);
             }
             try {
@@ -266,34 +264,34 @@ let userInfo = {
                 _userInfo = common.responseInfo(result)
                 cb(null, _userInfo);
               } else {
-                // responseInfo = {
-                //   code: 200,
-                //   datas: '登录失败',
-                //   status: '登录失败'
-                // }
+                responseInfo = {
+                  code: 200,
+                  datas: '登录失败',
+                  status: '登录失败'
+                }
                 result.message ='登录失败'
                 console.log('登录失败')
-                _userInfo = common.responseInfo(result)
+                _userInfo = common.responseInfo(responseInfo)
                 cb(null, _userInfo);
               }
             } catch (e) {
-              // responseInfo = {
-              //   code: 200,
-              //   datas: [],
-              //   status: e
-              // }
-              _userInfo = common.responseInfo(result)
+              responseInfo = {
+                code: 200,
+                datas: [],
+                status: e
+              }
+              _userInfo = common.responseInfo(responseInfo)
               cb(null, _userInfo);
             }
           })
         } else {
-          // responseInfo = {
-          //   code: 200,
-          //   datas: [],
-          //   status: '验签失败'
-          // }
+          responseInfo = {
+            code: 200,
+            datas: [],
+            status: '验签失败'
+          }
           result.message ='验签失败'
-          _userInfo = common.responseInfo(result)
+          _userInfo = common.responseInfo(responseInfo)
           cb(null, _userInfo);
         }
       })

@@ -2,7 +2,7 @@
  * @Author: lucm 
  * @Date: 2017-09-06 17:24:24 
  * @Last Modified by: lucm
- * @Last Modified time: 2017-12-19 16:48:17
+ * @Last Modified time: 2017-12-19 17:38:23
  */
 
 //生成MD5签名加密
@@ -31,10 +31,7 @@ class Validate {
     return _requestParam
   }
   validateHead(ctx, _headParam, callback) {
-    
     let _packageParamBase = this.packageParamBase(ctx.body)
-    console.log(ctx)
-    console.log(_packageParamBase)
     if (_headParam.header['content-type'] == 'application/json;charset=UTF-8') {
       if (_packageParamBase.head.sign == ctx.head.sign) {
         //验签成功
