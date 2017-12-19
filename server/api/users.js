@@ -253,7 +253,7 @@ let userInfo = {
               responseInfo = {
                 code: 500,
                 datas: [],
-                status: err.message
+                status: '用户存在'
               }
               _userInfo = common.responseInfo(responseInfo)
               cb(null, _userInfo);
